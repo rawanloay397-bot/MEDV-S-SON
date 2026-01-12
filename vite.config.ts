@@ -3,5 +3,6 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/MEDV-S-SON/',
+  // Ensure this matches your repository name exactly
+  base: '/MEDV-S-SON/', 
 })
