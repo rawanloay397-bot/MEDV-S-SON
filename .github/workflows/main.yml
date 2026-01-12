@@ -1,24 +1,25 @@
 name: Build and deploy to GitHub Pages
+
 on:
-  push:
+  push: 
     branches:
       - main
   workflow_dispatch:
 
-permissions:
+permissions: 
   contents: read
   pages: write
-  id-token: write
+  id-token:  write
 
 jobs:
-  build:
+  build: 
     runs-on: ubuntu-latest
     permissions:
       contents: read
       pages: write
       id-token: write
     steps:
-      - name: Checkout repository
+      - name:  Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup Node.js
@@ -30,25 +31,36 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build
+      - name:  Build
         run: npm run build --if-present
 
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v1
+        uses:  actions/upload-artifact@v4
         with:
+          name:  github-pages
           path: |
             dist
             build
             out
             public
+          retention-days: 1
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
     permissions:
-      pages: write
+      pages:  write
       id-token: write
       contents: read
+    environment:
+      name: github-pages
+      url: ${{ steps. deployment.outputs.page_url }}
     steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: github-pages
+
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v1
+        id: deployment
+        uses: actions/deploy-pages@v2
