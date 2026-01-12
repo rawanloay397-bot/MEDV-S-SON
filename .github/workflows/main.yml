@@ -1,56 +1,51 @@
 name: Build and deploy to GitHub Pages
 
 on:
-  push: 
-    branches:
+  push:
+    branches: 
       - main
   workflow_dispatch:
 
-permissions: 
+permissions:
   contents: read
   pages: write
-  id-token:  write
+  id-token: write
 
 jobs:
-  build: 
+  build:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       pages: write
       id-token: write
     steps:
-      - name:  Checkout repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
-        with:
+        with: 
           node-version: '18'
-          cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
-      - name:  Build
-        run: npm run build --if-present
+      - name: Build
+        run: npm run build
 
       - name: Upload Pages artifact
-        uses:  actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4
         with:
-          name:  github-pages
-          path: |
-            dist
-            build
-            out
-            public
+          name: github-pages
+          path: dist
           retention-days: 1
 
   deploy:
-    needs: build
+    needs:  build
     runs-on: ubuntu-latest
     permissions:
-      pages:  write
-      id-token: write
+      pages: write
+      id-token:  write
       contents: read
     environment:
       name: github-pages
