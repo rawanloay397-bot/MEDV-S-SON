@@ -1,0 +1,5 @@
+{
+  "name": "MediVision Exam Master",
+  "description": "Tıbbi sınav sorularını analiz eden, etimolojik kökenleri açıklayan ve Gemini 3 Pro ile derinlemesine klinik raporlar sunan ileri düzey eğitim aracı.",
+  "requestFramePermissions": []
+}
